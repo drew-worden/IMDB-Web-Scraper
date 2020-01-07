@@ -8,7 +8,7 @@ queried_media = pd.DataFrame(columns = ["Title", "Year of Release", "IMDB Rating
 
 #STRIP AND CLEANING FUNCTION
 def strip():
-    URL = "https://www.imdb.com/title/tt0111161/?pf_rd_m=A2FGELUUNOQJNL&pf_rd_p=e31d89dd-322d-4646-8962-327b42fe94b1&pf_rd_r=2C21P8DMC00ETTVXAW8K&pf_rd_s=center-1&pf_rd_t=15506&pf_rd_i=top&ref_=chttp_tt_1"
+    URL = "https://www.imdb.com/title/tt0081846/?pf_rd_m=A2FGELUUNOQJNL&pf_rd_p=12230b0e-0e00-43ed-9e59-8d5353703cce&pf_rd_r=JXMJT3FM1BS4H08MPF4Y&pf_rd_s=center-1&pf_rd_t=15506&pf_rd_i=toptv&ref_=chttvtp_tt_11"
     page = requests.get(URL)
     soup = BeautifulSoup(page.content, "html.parser")
 
@@ -38,14 +38,31 @@ def strip():
     dirty_parent_rating = soup.find("div", "subtext").get_text()
     dirty_parent_rating = dirty_parent_rating.split(" ")
     parent_rating_list = []
-    
+
     for element in dirty_parent_rating:
         if element == "" or element == "\n":
             del element
         else:
             parent_rating_list.append(element)
 
-    parent_rating = parent_rating_list[0].replace("\n", "")
+    parent_rating = str(parent_rating_list[0].replace("\n", ""))
     print(parent_rating)
+
+    #RUNTIME
+    runtime = soup.find("time").get_text()
+    runtime = runtime.split(" ")
+    runtime_list = []
+    for element in runtime:
+        element = element.replace("\n", "")
+        if element == "" or element == "\n":
+            del element
+        else:
+            runtime_list.append(element)
+
+    if len(runtime_list) == 2:
+        runtime = str(runtime_list[0] + " " + runtime_list[1])
+    else:
+        runtime = str(runtime_list[0])
+    print(runtime)
 
 strip()
