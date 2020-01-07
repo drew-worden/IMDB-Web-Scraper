@@ -29,4 +29,9 @@ def strip():
     imdb_rating = float(soup.find(itemprop = "ratingValue").get_text())
     print(imdb_rating)
 
+    #NUMBER OF RATINGS
+    num_ratings = soup.find(itemprop = "ratingCount").get_text()
+    num_ratings = int(num_ratings.replace(",", ""))
+    print(num_ratings)
+
 strip()
