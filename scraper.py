@@ -8,7 +8,7 @@ queried_media = pd.DataFrame(columns = ["Title", "Year of Release", "IMDB Rating
 
 #STRIP AND CLEANING FUNCTION
 def strip():
-    URL = input("Enter the URL of the IMDB page that you want to scrape: ")
+    URL = "https://www.imdb.com/title/tt0111161/?pf_rd_m=A2FGELUUNOQJNL&pf_rd_p=e31d89dd-322d-4646-8962-327b42fe94b1&pf_rd_r=2C21P8DMC00ETTVXAW8K&pf_rd_s=center-1&pf_rd_t=15506&pf_rd_i=top&ref_=chttp_tt_1"
     page = requests.get(URL)
     soup = BeautifulSoup(page.content, "html.parser")
 
@@ -33,5 +33,19 @@ def strip():
     num_ratings = soup.find(itemprop = "ratingCount").get_text()
     num_ratings = int(num_ratings.replace(",", ""))
     print(num_ratings)
+
+    #PARENTAL RATING
+    dirty_parent_rating = soup.find("div", "subtext").get_text()
+    dirty_parent_rating = dirty_parent_rating.split(" ")
+    parent_rating_list = []
+    
+    for element in dirty_parent_rating:
+        if element == "" or element == "\n":
+            del element
+        else:
+            parent_rating_list.append(element)
+
+    parent_rating = parent_rating_list[0].replace("\n", "")
+    print(parent_rating)
 
 strip()
