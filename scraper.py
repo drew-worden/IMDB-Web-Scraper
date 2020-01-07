@@ -15,14 +15,18 @@ def strip():
     #TITLE
     title = soup.find("h1", "").get_text()
     title = title.split("\xa0")
-    title = title[0]
+    title = str(title[0])
     print(title)
 
     #YEAR OF RELEASE
     year_release = soup.find("h1", "").get_text()
     year_release = year_release.split("\xa0")
     year_release = year_release[1]
-    year_release = year_release.replace("(", "").replace(")", "")
+    year_release = str(year_release.replace("(", "").replace(")", ""))
     print(year_release)
+
+    #IMDB RATING
+    imdb_rating = float(soup.find(itemprop = "ratingValue").get_text())
+    print(imdb_rating)
 
 strip()
