@@ -87,6 +87,18 @@ def strip():
     genre = list
     print(genre)
 
-    
+    #FULL RELEASE DATE
+    full_release_date = soup.find(title = "See more release dates").get_text()
+    full_release_date = full_release_date.split()
+    del full_release_date[-1]
+    release = ""
+    for element in full_release_date:
+        if full_release_date.index(element) == len(full_release_date) - 1:
+            release += element
+        else:
+            release += (element + " ")
+
+    full_release_date = release
+    print(full_release_date)
 
 strip()
