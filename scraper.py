@@ -4,7 +4,7 @@ import pandas as pd
 from bs4 import BeautifulSoup
 
 #EMPTY DATAFRAME
-queried_media = pd.DataFrame(columns = ["Title", "Year of Release", "IMDB Rating", "Number of Ratings", "Parental Rating", "Runtime", "Genre", "Full Release Date", "Country of Release", "Director", "MetaCritic Score", "Budget"])
+queried_media = pd.DataFrame(columns = ["Title", "Year of Release", "IMDB Rating", "Number of Ratings", "Parental Rating", "Runtime", "Genre(s)", "Full Release Date", "Country('s) of Release", "Director(s)", "MetaCritic Score", "Budget"])
 
 #STRIP AND CLEANING FUNCTION
 def strip():
@@ -78,7 +78,7 @@ def strip():
     genre = clean_genre
 
     list = []
-    imdb_genres = ["Drama", "Adventure", "Comedy", "Romance", "Mystery", "Family", "Musical", "Animation", "Horror", "Action", "Thriller", "Crime", "Biography", "Sci-Fi", "History", "War", "Fantasy", "Western"]
+    imdb_genres = ["Drama", "Adventure", "Comedy", "Romance", "Mystery", "Family", "Musical", "Animation", "Horror", "Action", "Thriller", "Crime", "Biography", "Sci-Fi", "History", "War", "Fantasy", "Western", "Documentary"]
     for element in genre:
         for item in imdb_genres:
             if item in element:
@@ -100,5 +100,36 @@ def strip():
 
     full_release_date = release
     print(full_release_date)
+
+    #COUNTRY OF RELEASE
+    div_title = soup.find("div", {"id": "titleDetails"})
+    div_title_children_list = []
+    for child in div_title.children:
+        div_title_children_list.append(child)
+
+    for tag in div_title_children_list:
+        tag = str(tag)
+        if "Country" in tag:
+            dirty_country = tag
+
+    dirty_country = dirty_country.split("\n")
+    dirty_country_list = []
+    for item in dirty_country:
+        if "<a" in item:
+            dirty_country_list.append(item)
+
+    country = []
+    for tag in dirty_country_list:
+        tag = tag.split(">")
+        del tag[0]
+        del tag[-1]
+        tag = tag[0].split("<")
+        tag = tag[0]
+        country.append(tag)
+
+    print(country)
+
+
+
 
 strip()
