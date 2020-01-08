@@ -8,7 +8,7 @@ queried_media = pd.DataFrame(columns = ["Title", "Year of Release", "IMDB Rating
 
 #STRIP AND CLEANING FUNCTION
 def strip():
-    URL = "https://www.imdb.com/title/tt0081846/?pf_rd_m=A2FGELUUNOQJNL&pf_rd_p=12230b0e-0e00-43ed-9e59-8d5353703cce&pf_rd_r=JXMJT3FM1BS4H08MPF4Y&pf_rd_s=center-1&pf_rd_t=15506&pf_rd_i=toptv&ref_=chttvtp_tt_11"
+    URL = "https://www.imdb.com/title/tt1690953/?ref_=nv_sr_srsg_3"
     page = requests.get(URL)
     soup = BeautifulSoup(page.content, "html.parser")
 
@@ -28,7 +28,6 @@ def strip():
     #IMDB RATING
     imdb_rating = float(soup.find(itemprop = "ratingValue").get_text())
     print(imdb_rating)
-
     #NUMBER OF RATINGS
     num_ratings = soup.find(itemprop = "ratingCount").get_text()
     num_ratings = int(num_ratings.replace(",", ""))
