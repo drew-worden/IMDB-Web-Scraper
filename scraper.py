@@ -4,7 +4,7 @@ import pandas as pd
 from bs4 import BeautifulSoup
 
 #EMPTY DATAFRAME
-queried_media = pd.DataFrame(columns = ["Title", "Year of Release", "IMDB Rating", "Number of Ratings", "Parental Rating", "Runtime", "Genre(s)", "Full Release Date", "Country('s) of Release", "Director(s)", "MetaCritic Score", "Budget"])
+queried_media = pd.DataFrame(columns = ["Title", "IMDB Rating", "Number of Ratings", "Parental Rating", "Runtime", "Genre(s)", "Release Date", "Country('s) of Release", "Director(s)", "MetaCritic Score", "Budget"])
 
 #STRIP AND CLEANING FUNCTION
 def strip():
@@ -17,13 +17,6 @@ def strip():
     title = title.split("\xa0")
     title = str(title[0])
     print(title)
-
-    #YEAR OF RELEASE
-    year_release = soup.find("h1", "").get_text()
-    year_release = year_release.split("\xa0")
-    year_release = year_release[1]
-    year_release = str(year_release.replace("(", "").replace(")", ""))
-    print(year_release)
 
     #IMDB RATING
     imdb_rating = float(soup.find(itemprop = "ratingValue").get_text())
