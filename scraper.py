@@ -8,7 +8,7 @@ queried_media = pd.DataFrame(columns = ["Title", "Year of Release", "IMDB Rating
 
 #STRIP AND CLEANING FUNCTION
 def strip():
-    URL = "https://www.imdb.com/title/tt1690953/?ref_=nv_sr_srsg_3"
+    URL = input("IMDB LINK: ")
     page = requests.get(URL)
     soup = BeautifulSoup(page.content, "html.parser")
 
@@ -63,5 +63,30 @@ def strip():
     else:
         runtime = str(runtime_list[0])
     print(runtime)
+
+    #GENRE
+    genre = soup.find("div", "subtext").get_text()
+    genre = genre.split(" ")
+
+    clean_genre = []
+    for element in genre:
+        element = element.replace("\n", "").replace("|", ""). replace(",", "")
+        if element == '' or element == '' or element == '\n' or element == "|":
+            del element
+        else:
+            clean_genre.append(element)
+    genre = clean_genre
+
+    list = []
+    imdb_genres = ["Drama", "Adventure", "Comedy", "Romance", "Mystery", "Family", "Musical", "Animation", "Horror", "Action", "Thriller", "Crime", "Biography", "Sci-Fi", "History", "War", "Fantasy", "Western"]
+    for element in genre:
+        for item in imdb_genres:
+            if item in element:
+                list.append(item)
+
+    genre = list
+    print(genre)
+
+    
 
 strip()
