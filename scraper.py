@@ -80,19 +80,39 @@ def strip():
     genre = list
     print(genre)
 
-    #FULL RELEASE DATE
-    full_release_date = soup.find(title = "See more release dates").get_text()
-    full_release_date = full_release_date.split()
-    del full_release_date[-1]
-    release = ""
-    for element in full_release_date:
-        if full_release_date.index(element) == len(full_release_date) - 1:
-            release += element
-        else:
-            release += (element + " ")
+    #RELEASE DATE
+    div_title = soup.find("div", {"id": "titleDetails"})
+    div_title_children_list = []
+    for child in div_title.children:
+        div_title_children_list.append(str(child))
 
-    full_release_date = release
-    print(full_release_date)
+    for child in div_title_children_list:
+        if "Release Date" in child:
+            dirty_release_date = child
+
+    dirty_release_date = dirty_release_date.split("\n")
+    for element in dirty_release_date:
+        if "Release Date" in element:
+            cleaner_release_date = element
+
+    cleaner_release_date = cleaner_release_date.split(">")
+    cleaner_release_date = cleaner_release_date[-1]
+    cleaner_release_date = cleaner_release_date.split(" ")
+    release_date = []
+    for element in cleaner_release_date:
+        if (" " in element) or ("(" in element):
+            del element
+        else:
+            release_date.append(element)
+    del release_date[0]
+    date = ''
+    for element in release_date:
+        if release_date.index(element) == len(release_date) -1:
+            date += element
+        else:
+            date += (element + " ")
+
+    print(date)
 
     #COUNTRY OF RELEASE
     div_title = soup.find("div", {"id": "titleDetails"})
