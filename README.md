@@ -26,5 +26,6 @@
   
   This project is not perfect and there are a few bugs and errors that still need ironing out. The purpose of this project is to showcase by ability to use different data science techniques in Python to obtain clean and workable data.
   
+- ## CONTACT    
   If you have any questions or suggestions on how this project could be improved feel free to contact me at drew.p.worden@gmail.com.
   
