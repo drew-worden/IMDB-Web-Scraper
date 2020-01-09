@@ -19,7 +19,7 @@
    Selecting this option by typing "2" and hitting enter will print the current DATAFRAME, with all previous queries visible. This is here so that the user can keep track of what they have added.
    
  - FINISH AND EXPORT DATAFRAME  
-   Selecting this option by typing "3" and hitting enter will close the program and export your DataFrame with all of its queries to a CSV file located in the same directory the scraper.py file is stored.
+   Selecting this option by typing "3" and hitting enter will close the program and export your DataFrame with all of its queries to a CSV file located in the same directory the scraper.py file is stored. The file with be called "imdb_movies.csv".
    
 - ## NOTES  
   If you want to create another DataFrame using the scraper script, make sure you remove the previously exported CSV file from the directory, otherwise you will be confronted with an error.
