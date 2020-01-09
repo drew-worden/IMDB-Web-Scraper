@@ -12,7 +12,7 @@
   VIEW DATAFRAME - 2  
   FINISH AND EXPORT DATAFRAME - 3  
   
-  - MAKE A QUERY  
+ - MAKE A QUERY  
     Selecting this option by typing "1" and hitting enter will provide you with a option to input a IMDB link for a movie or TV show link. Once you have found a page that you would like to scrape, copy the URL, paste it into the program, and hit enter. The program will show what was scraped and add it to a DataFrame.
  
  - VIEW DATAFRAME  
