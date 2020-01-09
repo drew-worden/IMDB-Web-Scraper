@@ -4,7 +4,8 @@ import pandas as pd
 from bs4 import BeautifulSoup
 
 #EMPTY DATAFRAME
-queried_media = pd.DataFrame(columns = ["Title", "IMDB Rating", "Number of Ratings", "Parental Rating", "Runtime", "Genre(s)", "Release Date", "Country('s) of Release", "Budget"])
+columns = ["Title", "IMDB Rating", "Number of Ratings", "Parental Rating", "Runtime", "Genre(s)", "Release Date", "Country('s) of Release", "Budget"]
+queried_media = pd.DataFrame(columns = columns )
 
 #STRIP AND CLEANING FUNCTION
 def strip():
@@ -159,22 +160,23 @@ def strip():
     print(budget)
 
     imdb_row = [title, imdb_rating, num_ratings, parent_rating, runtime, genre, date, country, budget]
+    imdb_row = pd.DataFrame([imdb_row], columns = columns)
 
     return imdb_row
 
 repeat = True
 while repeat == True:
-    answer = input("\nMAKE A QUERY - 1\nADD SCRAPED DATA TO DATAFRAME - 2\nDISREGARD QUERY AND MAKE ANOTHER - 3\nVIEW DATAFRAME - 4\nFINISH AND EXPORT DATAFRAME - 5\n")
+    answer = input("\nMAKE A QUERY - 1\nVIEW DATAFRAME - 2\nFINISH AND EXPORT DATAFRAME - 3\n")
     if answer == "1":
-        data = strip()
+        imdb_row = strip()
+        queried_media = queried_media.append(imdb_row)
         repeat == True
-    if answer == "2":
-        queried_media.append(data)
-        repeat == True
-    if answer == "3":
-        repeat == "True"
-    if answer == "4":
+    elif answer == "2":
         print(queried_media)
-        repeat == "True"
-    if answer == "5":
-        repeat == False
+        repeat == True
+    elif answer == "3":
+        queried_media.to_csv("imdb_movies.csv", sep = ",", encoding = "utf-8")
+        repeat = False
+    else:
+        print("ERROR - INVALID INPUT - TRY AGAIN")
+        pass
