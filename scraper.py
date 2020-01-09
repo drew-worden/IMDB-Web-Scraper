@@ -4,11 +4,11 @@ import pandas as pd
 from bs4 import BeautifulSoup
 
 #EMPTY DATAFRAME
-queried_media = pd.DataFrame(columns = ["Title", "IMDB Rating", "Number of Ratings", "Parental Rating", "Runtime", "Genre(s)", "Release Date", "Country('s) of Release", "Director(s)", "MetaCritic Score", "Budget"])
+queried_media = pd.DataFrame(columns = ["Title", "IMDB Rating", "Number of Ratings", "Parental Rating", "Runtime", "Genre(s)", "Release Date", "Country('s) of Release", "Budget"])
 
 #STRIP AND CLEANING FUNCTION
 def strip():
-    URL = input("IMDB LINK: ")
+    URL = input("IMDB URL: ")
     page = requests.get(URL)
     soup = BeautifulSoup(page.content, "html.parser")
 
@@ -16,11 +16,13 @@ def strip():
     title = soup.find("h1", "").get_text()
     title = title.split("\xa0")
     title = str(title[0])
+    print("\n******************** SCRAPED DATA ********************")
     print(title)
 
     #IMDB RATING
     imdb_rating = float(soup.find(itemprop = "ratingValue").get_text())
     print(imdb_rating)
+
     #NUMBER OF RATINGS
     num_ratings = soup.find(itemprop = "ratingCount").get_text()
     num_ratings = int(num_ratings.replace(",", ""))
@@ -57,7 +59,7 @@ def strip():
         runtime = str(runtime_list[0])
     print(runtime)
 
-    #GENRE
+    #GENRE(S)
     genre = soup.find("div", "subtext").get_text()
     genre = genre.split(" ")
 
@@ -98,6 +100,7 @@ def strip():
     cleaner_release_date = cleaner_release_date.split(">")
     cleaner_release_date = cleaner_release_date[-1]
     cleaner_release_date = cleaner_release_date.split(" ")
+
     release_date = []
     for element in cleaner_release_date:
         if (" " in element) or ("(" in element):
@@ -105,6 +108,7 @@ def strip():
         else:
             release_date.append(element)
     del release_date[0]
+
     date = ''
     for element in release_date:
         if release_date.index(element) == len(release_date) -1:
@@ -114,7 +118,7 @@ def strip():
 
     print(date)
 
-    #COUNTRY OF RELEASE
+    #COUNTRY(S) OF RELEASE
     div_title = soup.find("div", {"id": "titleDetails"})
     div_title_children_list = []
     for child in div_title.children:
@@ -142,7 +146,35 @@ def strip():
 
     print(country)
 
+    #BUDGET
+    all_div = str(soup.find_all("div", "txt-block"))
+    all_div = all_div.split("\n")
+    for element in all_div:
+        if "Budget" in element:
+            dirty_budget = element
 
+    dirty_budget = dirty_budget.split(">")
+    budget = str(dirty_budget[-1])
+    budget = budget.replace("$", "")
+    print(budget)
 
+    imdb_row = [title, imdb_rating, num_ratings, parent_rating, runtime, genre, date, country, budget]
 
-strip()
+    return imdb_row
+
+repeat = True
+while repeat == True:
+    answer = input("\nMAKE A QUERY - 1\nADD SCRAPED DATA TO DATAFRAME - 2\nDISREGARD QUERY AND MAKE ANOTHER - 3\nVIEW DATAFRAME - 4\nFINISH AND EXPORT DATAFRAME - 5\n")
+    if answer == "1":
+        data = strip()
+        repeat == True
+    if answer == "2":
+        queried_media.append(data)
+        repeat == True
+    if answer == "3":
+        repeat == "True"
+    if answer == "4":
+        print(queried_media)
+        repeat == "True"
+    if answer == "5":
+        repeat == False
