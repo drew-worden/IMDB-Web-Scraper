@@ -3,7 +3,7 @@
 - ## DESCRIPTION
   This python script utilizes the python packages "requests" and "BeautifulSoup" to extract elements from an IMDB web page and cleans them for further analysis. It starts with the "requests" package that gets passed a URL which accesses the page. The package "BeautifulSoup" is then used to extract certain HTML elements via classes or other CSS descriptors. After the relevant tags and their contents have been extracted for loops and conditional statements are used, along with some list manipulations, to clean the data into the format that would be useful for further analysis. Once the data has been grabbed and cleaned the "pandas" package is ustilized to package the data into a pandas DataFrame, which is the standard for data science related applications. Once this is done the DataFrame can then be exported into a csv.
 
-- ## HOW TO USE
+- ## INSTRUCTIONS
   Clone using Git or download the repository to a folder on your local computer. Inside you will find two files, scraper.py and README.md. The scraper.py file is the python script that does the scraping and the README.md file contains the contents that you are currently reading. Run the scraper.py file however you like, I prefer using Git Bash.
 
   Once you run the file you will be greeted by a text-based UI that will have three options.
